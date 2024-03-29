@@ -1,4 +1,4 @@
-package piscine
+package main
 
 import (
 	"bufio"
@@ -124,6 +124,20 @@ func ImportNums(numberFile string) []int {
 	return digits
 }
 
-func main() {
+func Average(numbers []int) int {
+	total := 0
+	counter := 0
+	for _, number := range numbers {
+		total += number
+		counter++
+	}
+	return total / counter
+}
 
+func main() {
+	numbers := ImportNums(os.Args[1])
+	fmt.Println(Average(numbers))
+	//fmt.Println(Median(numbers))
+	//fmt.Println(Variance(numbers))
+	//fmt.Println(StanDev(numbers))
 }

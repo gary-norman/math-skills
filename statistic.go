@@ -148,10 +148,26 @@ func Median(numbers []int) int {
 	return highest - (highest-lowest)/2
 }
 
+func Variance(numbers []int) int {
+	mean := Average(numbers)
+	var variance int
+	total := 0
+	var counter int
+	for _, number := range numbers {
+		variance = mean - number
+		fmt.Printf("variance: %v\n", variance)
+		total += variance
+		counter++
+		fmt.Printf("total: %v, counter: %v\n", total, counter)
+	}
+	fmt.Printf("total: %v, counter: %v\n", total, counter)
+	return total / counter
+}
+
 func main() {
 	numbers := ImportNums(os.Args[1])
-	fmt.Println(Average(numbers))
-	//fmt.Println(Median(numbers))
-	//fmt.Println(Variance(numbers))
-	//fmt.Println(StanDev(numbers))
+	fmt.Printf("Average: %v\n", Average(numbers))
+	fmt.Printf("Median: %v\n", Median(numbers))
+	fmt.Printf("Variance: %v\n", Variance(numbers))
+	//fmt.Printf("Standard Deviation: %v\n", StanDev(numbers))
 }

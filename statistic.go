@@ -58,8 +58,49 @@ func BTreeInsertInt(root *TreeNode, data int) *TreeNode {
 	return root
 }
 
+// Atoi converts a string to a number
+func Atoi(s string) int {
+	var b int
+	isNeg := false
+	for i := 0; i <= len(s)-1; i++ {
+		// check for double pos or neg
+		if len(s) > 1 {
+			if s[i] == '+' && (s[i+1] == '+' || s[i+1] == '-') || s[i] == '-' && (s[i+1] == '-' || s[i+1] == '+') {
+				b = 0
+				break
+			}
+		}
+		// check for space
+		if s[i] == ' ' {
+			b = 0
+			break
+		}
+
+		// check for digits
+		if (s[i] >= '0' && s[i] <= '9') || s[i] == '+' || s[i] == '-' {
+			if s[i] == '+' {
+			} else if s[i] == '-' {
+				isNeg = true
+			} else {
+				b += int(s[i] - 48)
+				if i <= len(s)-2 {
+					b *= 10
+				}
+			}
+		} else {
+			b = 0
+			break
+		}
+	}
+	if isNeg {
+		return -(b)
+	} else {
+		return b
+	}
+}
+
 // ImportNums import the numbers from the file and convert it to a slice of strings
-func ImportNums(numberFile string) []string {
+func ImportNums(numberFile string) []int {
 	file, err := os.Open(numberFile)
 	if err != nil {
 		fmt.Println("Error opening the file:", err)
@@ -73,10 +114,14 @@ func ImportNums(numberFile string) []string {
 	scanned := bufio.NewScanner(file)
 	scanned.Split(bufio.ScanLines)
 	var source []string
+	var digits []int
 	for scanned.Scan() {
 		source = append(source, scanned.Text())
 	}
-	return source
+	for _, number := range source {
+		digits = append(digits, Atoi(number))
+	}
+	return digits
 }
 
 func main() {

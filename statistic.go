@@ -134,6 +134,20 @@ func Average(numbers []int) int {
 	return total / counter
 }
 
+func Median(numbers []int) int {
+	lowest := numbers[0]
+	highest := numbers[0]
+	for _, number := range numbers {
+		if number < lowest {
+			lowest = number
+		}
+		if number > highest {
+			highest = number
+		}
+	}
+	return highest - (highest-lowest)/2
+}
+
 func main() {
 	numbers := ImportNums(os.Args[1])
 	fmt.Println(Average(numbers))

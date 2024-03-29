@@ -3,6 +3,7 @@ package main
 import (
 	"bufio"
 	"fmt"
+	"math"
 	"os"
 )
 
@@ -25,9 +26,9 @@ $> go run your-program.go data.txt
 
 After reading the file, your program must execute each of the calculations asked above and print the results in the following manner (the following numbers are only examples):
 
-Average: 35
-Median: 4
-Variance: 5
+Average: 132
+Median: 150
+Variance: 784.66667
 Standard Deviation: 65
 
 Please note that the values are rounded integers.
@@ -124,17 +125,17 @@ func ImportNums(numberFile string) []int {
 	return digits
 }
 
-func Average(numbers []int) int {
+func Average(numbers []int) float64 {
 	total := 0
 	counter := 0
 	for _, number := range numbers {
 		total += number
 		counter++
 	}
-	return total / counter
+	return float64(total / counter)
 }
 
-func Median(numbers []int) int {
+func Median(numbers []int) float64 {
 	lowest := numbers[0]
 	highest := numbers[0]
 	for _, number := range numbers {
@@ -145,29 +146,32 @@ func Median(numbers []int) int {
 			highest = number
 		}
 	}
-	return highest - (highest-lowest)/2
+	return float64(highest - (highest-lowest)/2)
 }
 
-func Variance(numbers []int) int {
-	mean := Average(numbers)
-	var variance int
-	total := 0
-	var counter int
+//func TwoDigitSquare(digits int) int {
+//	a := digits % 10
+//	b := digits - a
+//	var square int
+//	square = (a*a)*100 + (2*a*b)*10 +
+//}
+
+func Variance(numbers []int) float64 {
+	var variance float64
+	var total float64
+	var counter float64
 	for _, number := range numbers {
-		variance = mean - number
-		fmt.Printf("variance: %v\n", variance)
+		variance = (float64(number) - Average(numbers)) * (float64(number) - Average(numbers))
 		total += variance
 		counter++
-		fmt.Printf("total: %v, counter: %v\n", total, counter)
 	}
-	fmt.Printf("total: %v, counter: %v\n", total, counter)
 	return total / counter
 }
 
 func main() {
 	numbers := ImportNums(os.Args[1])
-	fmt.Printf("Average: %v\n", Average(numbers))
-	fmt.Printf("Median: %v\n", Median(numbers))
-	fmt.Printf("Variance: %v\n", Variance(numbers))
-	//fmt.Printf("Standard Deviation: %v\n", StanDev(numbers))
+	fmt.Printf("Average: %v\n", math.Round(Average(numbers)))
+	fmt.Printf("Median: %v\n", math.Round(Median(numbers)))
+	fmt.Printf("Variance: %v\n", math.Round(Variance(numbers)))
+	fmt.Printf("Standard Deviation: %v\n", math.Round(math.Sqrt(Variance(numbers))))
 }

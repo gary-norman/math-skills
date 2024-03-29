@@ -1,10 +1,10 @@
 package piscine
 
-//import (
-//	//"bufio"
-//	//"fmt"
-//	//"os"
-//)
+import (
+	"bufio"
+	"fmt"
+	"os"
+)
 
 /*
 Your program must be able to read from a file and print the result of each statistic mentioned above. In other words, your program must be able to read the data present in the path passed as argument. The data in the file will be presented as the following example:
@@ -56,6 +56,27 @@ func BTreeInsertInt(root *TreeNode, data int) *TreeNode {
 		}
 	}
 	return root
+}
+
+// ImportNums import the numbers from the file and convert it to a slice of strings
+func ImportNums(numberFile string) []string {
+	file, err := os.Open(numberFile)
+	if err != nil {
+		fmt.Println("Error opening the file:", err)
+	}
+	defer func(file *os.File) {
+		err := file.Close()
+		if err != nil {
+			fmt.Println("Error closing the file:", err)
+		}
+	}(file)
+	scanned := bufio.NewScanner(file)
+	scanned.Split(bufio.ScanLines)
+	var source []string
+	for scanned.Scan() {
+		source = append(source, scanned.Text())
+	}
+	return source
 }
 
 func main() {

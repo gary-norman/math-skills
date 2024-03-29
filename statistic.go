@@ -34,31 +34,6 @@ Standard Deviation: 65
 Please note that the values are rounded integers.
 */
 
-type TreeNode struct {
-	Left, Right, Parent *TreeNode
-	Data                int
-}
-
-// BTreeInsertInt insert the data into TreeNode
-func BTreeInsertInt(root *TreeNode, data int) *TreeNode {
-	if root == nil {
-		return &TreeNode{Data: data}
-	}
-
-	if data < root.Data {
-		root.Left = BTreeInsertInt(root.Left, data)
-		if root.Left != nil {
-			root.Left.Parent = root
-		}
-	} else {
-		root.Right = BTreeInsertInt(root.Right, data)
-		if root.Right != nil {
-			root.Right.Parent = root
-		}
-	}
-	return root
-}
-
 // Atoi converts a string to a number
 func Atoi(s string) int {
 	var b int

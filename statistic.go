@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"math"
 	"os"
+	"sort"
 )
 
 /*
@@ -29,7 +30,7 @@ After reading the file, your program must execute each of the calculations asked
 Average: 132
 Median: 150
 Variance: 784.66667
-Standard Deviation: 65
+Standard Deviation: 28
 
 Please note that the values are rounded integers.
 */
@@ -75,7 +76,7 @@ func Atoi(s string) int {
 	}
 }
 
-// ImportNums import the numbers from the file and convert it to a slice of strings
+// ImportNums import the numbers from the file and convert it to a slice of strings, sorted
 func ImportNums(numberFile string) []int {
 	file, err := os.Open(numberFile)
 	if err != nil {
@@ -97,6 +98,9 @@ func ImportNums(numberFile string) []int {
 	for _, number := range source {
 		digits = append(digits, Atoi(number))
 	}
+	sort.Slice(digits, func(i, j int) bool {
+		return digits[i] < digits[j]
+	})
 	return digits
 }
 
@@ -111,25 +115,12 @@ func Average(numbers []int) float64 {
 }
 
 func Median(numbers []int) float64 {
-	lowest := numbers[0]
-	highest := numbers[0]
-	for _, number := range numbers {
-		if number < lowest {
-			lowest = number
-		}
-		if number > highest {
-			highest = number
-		}
+	middle := len(numbers) / 2
+	if len(numbers)%2 == 1 {
+		return float64(numbers[middle])
 	}
-	return float64(highest - (highest-lowest)/2)
+	return (float64(numbers[middle-1]) + float64(numbers[middle])) / 2
 }
-
-//func TwoDigitSquare(digits int) int {
-//	a := digits % 10
-//	b := digits - a
-//	var square int
-//	square = (a*a)*100 + (2*a*b)*10 +
-//}
 
 func Variance(numbers []int) float64 {
 	var variance float64
@@ -145,7 +136,7 @@ func Variance(numbers []int) float64 {
 
 func main() {
 	numbers := ImportNums(os.Args[1])
-	fmt.Printf("Average: %v\n", math.Round(Average(numbers)))
+	fmt.Printf("Average: %v\n", math.Ceil(Average(numbers)))
 	fmt.Printf("Median: %v\n", math.Round(Median(numbers)))
 	fmt.Printf("Variance: %v\n", math.Round(Variance(numbers)))
 	fmt.Printf("Standard Deviation: %v\n", math.Round(math.Sqrt(Variance(numbers))))

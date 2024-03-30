@@ -17,8 +17,10 @@ Run `tar xvf stat-bin-dockerized.zip && mv stat-bin/* ./`
 
 #### Run the test script and go file
 
-> To be able to run this script you need to have installed locally 
-> [`docker-engine`](https://docs.docker.com/engine/install/)
+> To be able to run this script you need to have Docker installed locally 
+> Check with  
+> `docker version`  
+> Install at [`docker-engine`](https://docs.docker.com/engine/install)
 
 Run the script `./run.sh math-skills`. This will create a file 'data.txt' that contains a randomly generated list of
 numbers, and return the expected values of **Average**, **Median**, **Variance**, and **Standard Deviation**.

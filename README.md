@@ -10,7 +10,14 @@ Run the file by typing `go run . <filename>` where filename is the file containi
 
 ## How to test
 
-> To be able to run this script you need to have installed locally
+#### Download and unpack the test files
+
+Run `wget https://assets.01-edu.org/stats-projects/stat-bin-dockerized.zip`  
+Run `tar xvf stat-bin-dockerized.zip && mv stat-bin/* ./`  
+
+#### Run the test script and go file
+
+> To be able to run this script you need to have installed locally 
 > [`docker-engine`](https://docs.docker.com/engine/install/)
 
 Run the script `./run.sh math-skills`. This will create a file 'data.txt' that contains a randomly generated list of

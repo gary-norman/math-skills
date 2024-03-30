@@ -35,7 +35,7 @@ Standard Deviation: 28
 Please note that the values are rounded integers.
 */
 
-// Atoi converts a string to a number
+// Atoi converts a string to an integer
 func Atoi(s string) int {
 	var b int
 	isNeg := false
@@ -111,7 +111,7 @@ func Average(numbers []int) float64 {
 		total += number
 		counter++
 	}
-	return float64(total / counter)
+	return float64(total) / float64(counter)
 }
 
 func Median(numbers []int) float64 {
@@ -122,12 +122,12 @@ func Median(numbers []int) float64 {
 	return (float64(numbers[middle-1]) + float64(numbers[middle])) / 2
 }
 
-func Variance(numbers []int) float64 {
-	var variance float64
-	var total float64
-	var counter float64
+func Variance(numbers []int) int {
+	var variance int
+	var total int
+	var counter int
 	for _, number := range numbers {
-		variance = (float64(number) - Average(numbers)) * (float64(number) - Average(numbers))
+		variance = (number - int(Average(numbers))) * (number - int(Average(numbers)))
 		total += variance
 		counter++
 	}
@@ -136,8 +136,8 @@ func Variance(numbers []int) float64 {
 
 func main() {
 	numbers := ImportNums(os.Args[1])
-	fmt.Printf("Average: %v\n", math.Ceil(Average(numbers)))
+	fmt.Printf("Average: %v\n", math.Round(Average(numbers)))
 	fmt.Printf("Median: %v\n", math.Round(Median(numbers)))
-	fmt.Printf("Variance: %v\n", math.Round(Variance(numbers)))
-	fmt.Printf("Standard Deviation: %v\n", math.Round(math.Sqrt(Variance(numbers))))
+	fmt.Printf("Variance: %v\n", Variance(numbers))
+	fmt.Printf("Standard Deviation: %v\n", math.Round(math.Sqrt(float64(Variance(numbers)))))
 }
